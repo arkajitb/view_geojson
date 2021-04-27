@@ -26,6 +26,7 @@ The request will return `access` and `refresh` tokens.
 
 Use the access token to access all the api routes mentioned below.
 
+You can run `http://0.0.0.0:8000/api/token` as a POST method in postman and pass username and password in the body to get the same result.
 
 #### Upload all the features from municipalities_nl.geojson
 `curl -X POST -H "Accept: application/json" -H "Authorization: Bearer {Access_token}" http://0.0.0.0:8000/api/locations/upload_data/`
@@ -40,7 +41,7 @@ Use the access token to access all the api routes mentioned below.
 
 `http://0.0.0.0:8000/api/locations/?in_bbox=[]`
 
-#### Filter features based on municipality name (method=[GET])
+#### Filter features based on municipality id (method=[GET])
 
 `http://0.0.0.0/api/locations/{id}`
 
