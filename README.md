@@ -1,5 +1,5 @@
 ### Run docker-compose
-
+Change directory to `municipalities`
 - To start the server in your localhost, run:
 ```console
 $ docker-compose up
@@ -52,5 +52,6 @@ You will get the new access token.
 
 #### Add a new location
 
-`http://0.0.0.0:8000/api/location?name={name}&` (method=[POST])
-
+`http://0.0.0.0:8000/api/location/ (method=[POST])`
+inside `body->x-www-form-urlencoded`
+pass `name` and `geometry` as the required keys and provide values for the same.
