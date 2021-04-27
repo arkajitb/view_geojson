@@ -9,7 +9,6 @@ from rest_framework.decorators import action
 from django.contrib.gis.geos import GEOSGeometry
 import geopandas as gpd
 from pathlib import Path
-from os import path
 
 # Internal imports
 from .models import Location
@@ -17,6 +16,7 @@ from .models import Location
 # View for Location model.
 class LocationView(viewsets.ModelViewSet):
 
+	queryset = Location.objects.all()
 	serializer_class = LocationSerializer
 	pagination_class = PageNumberPagination
 	bbox_filter_field = 'geometry'
@@ -24,25 +24,10 @@ class LocationView(viewsets.ModelViewSet):
 	bbox_filter_include_overlapping = True
 	permission_classes = [IsAuthenticated]
 
-	# Get 100 objects per page.
-	def get_queryset(self):
-		locations = Location.objects.all()
-		return locations
-
-	# Retreive features for a particular location based on the name.
-	def retrieve(self, request, *args, **kwargs):
-		params = kwargs
-		location = Location.objects.filter(name = params['pk'])
-		serializer = LocationSerializer(location, many=True)
-		if serializer.data['features']:
-			return Response(serializer.data)
-		else:
-			return Response({'Features not available for the current location provided.'})
-
 	# Create feature objects from a file path provided.
 	@action(detail=False, methods = ['post'])
 	def upload_data(self, request):
-		file_path = Path('municipalities_nl.geojson')
+		file_path = 'municipalities_nl.geojson'
 		gdf = gpd.read_file(file_path)
 
 		# Iterate through each geoJSON object and create an object for Location model.
@@ -61,22 +46,3 @@ class LocationView(viewsets.ModelViewSet):
 				geometry = GEOSGeometry(geometry),
 				)
 		return Response({'Data uploaded from the file successfully'})
-
-	
-
-
-
-	
-
-		
-			
-
-
-
-
-
-
-
-
-
-

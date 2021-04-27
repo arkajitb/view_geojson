@@ -2,8 +2,6 @@ from django.urls import path, include
 from . import views
 from rest_framework import routers
 
-
-
 # Default router performs all the basic operations.
 router = routers.DefaultRouter()
 
@@ -14,5 +12,3 @@ router.register(r'locations', views.LocationView,basename='locations')
 urlpatterns = [
 path('', include(router.urls)),
 ]
-
-

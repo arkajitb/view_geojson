@@ -1,3 +1,5 @@
 .env
 municipalities/__pycache__
 municipalities_nl/__pycache__
+.DS_Store
+municipalities/data
