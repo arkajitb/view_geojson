@@ -1,0 +1,24 @@
+version: '3'
+
+services: 
+    web:
+        # tty: true
+        # restart: always
+        build: .
+        # command: python manage.py runserver 0.0.0.0:8000
+        command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        volumes:
+              - .:/app
+        ports:
+              - "8000:8000"
+        depends_on:
+              - postgres
+    postgres:
+      image: mdillon/postgis:10
+      environment:
+              - POSTGRES_HOST=db
+              - POSTGRES_DB=postgres
+              - POSTGRES_USER=postgres
+              - POSTGRES_PASSWORD=postgres
+        
+      
