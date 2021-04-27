@@ -42,20 +42,7 @@ class LocationView(viewsets.ModelViewSet):
 	# Create feature objects from a file path provided.
 	@action(detail=False, methods = ['post'])
 	def upload_data(self, request):
-
-		# Get file_path from the parameter passed.
-		params = self.request.query_params
-
-		if len(params) == 0:
-			file_path = Path('municipalities_nl.geojson')
-		elif len(params) > 1:
-			return Response({'Only file_path is allowed.'})
-		elif 'file_path' not in params:
-			return Response({'Please provide file_path parameter.'})
-		else:
-			file_path = params.get('file_path')
-		if not path.exists(file_path):
-			return Response({'File path provided does not exist'})
+		file_path = Path('municipalities_nl.geojson')
 		gdf = gpd.read_file(file_path)
 
 		# Iterate through each geoJSON object and create an object for Location model.
